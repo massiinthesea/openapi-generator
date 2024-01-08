@@ -1132,6 +1132,32 @@ paths:
         - petstore_auth:
             - 'write:pets'
             - 'read:pets'
+  /fake/outer/array-of-unique-enums:
+    post:
+      tags:
+        - fake
+      description: Test serialization of outer enum types
+      operationId: getArrayOfUniqueEnums
+      parameters:
+        - name: uniqueEnums
+          in: body
+          description: List of unique Enums
+          schema:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - available
+                - pending
+                - sold
+      responses:
+        '200':
+          description: Got named array of enums
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ArrayOfEnums'
 securityDefinitions:
   petstore_auth:
     type: oauth2

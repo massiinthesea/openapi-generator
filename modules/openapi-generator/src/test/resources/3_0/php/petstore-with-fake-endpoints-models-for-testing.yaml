@@ -1310,6 +1310,32 @@ paths:
       responses:
         200:
           description: OK
+  /fake/outer/array-of-unique-enums:
+    post:
+      tags:
+        - fake
+      description: Test serialization of outer enum types
+      operationId: getArrayOfUniqueEnums
+      parameters:
+        - name: uniqueEnums
+          in: body
+          description: List of unique Enums
+          schema:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              enum:
+                - available
+                - pending
+                - sold
+      responses:
+        '200':
+          description: Got named array of enums
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ArrayOfEnums'
 servers:
   - url: 'http://{server}.swagger.io:{port}/v2'
     description: petstore server
